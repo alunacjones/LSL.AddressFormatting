@@ -4,4 +4,56 @@
 
 # LSL.AddressFormatting
 
-Provide package documentation here.
+A package for building a single address line using simple logic to filter out empty lines and parts of a line.
+
+## Example
+
+```csharp
+// Required usings
+using LSL.AddressFormatting;
+
+...
+
+var builder = new AddressBuilder();
+
+var singleLineAddress = builder.Build(c => c
+    // The string to separate each line.
+    // In this case it is not required as ", "
+    // is the default separator
+    .WithLineSeparator(", ")
+    // The string to separate each section within a line.
+    // In this case it is not required as " "
+    // is the default separator            
+    .WithSectionSeparator(" ")
+    // The following line will have the two middle items removed
+    // since they are null or empty strings
+    .AddLine(ld => ld.AddSections([
+        "123",
+        null,
+        "",
+        "High Street"
+    ]))
+    // This line will not be used as it has no sections
+    .AddLine(ld => ld.AddSections([
+    ]))
+    // This line will not be used as all its sections are either 
+    // null or empty strings
+    .AddLine(ld => ld.AddSections([
+        "",
+        null
+    ]))
+    .AddLine(ld => ld.AddSections([
+        "Chester"
+    ]))
+    .AddLine(ld => ld.AddSections([
+            "Cheshire",
+            "more info"
+        ])
+        // This is a section separator that
+        // is only applied to this ilne
+        .WithSectionSeparator(" - "))
+    .AddLine(ld => ld.AddSections(["CH1 3DD"]))
+);
+
+// singleLineAddress will be "123 High Street, Chester, Cheshire - more info, CH1 3DD"
+```

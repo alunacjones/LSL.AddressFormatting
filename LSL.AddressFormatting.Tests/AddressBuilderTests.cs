@@ -24,6 +24,43 @@ public class AddressBuilderTests
         result.Should().Be(testCase.ExpectedResult);
     }
 
+    [Test]
+    [Ignore("just for the readme file")]
+    public void ForDocs()
+    {
+        var builder = new AddressBuilder();
+        var result = builder.Build(c => c
+            // The string to separate each line.
+            // In this case it is not required as ", "
+            // is the default separator
+            .WithLineSeparator(", ")
+            // The string to separate each section within a line.
+            // In this case it is not required as " "
+            // is the default separator            
+            .WithSectionSeparator(" ")
+            .AddLine(ld => ld.AddSections([
+                "123",
+                null,
+                "",
+                "High Street"
+            ]))
+            .AddLine(ld => ld.AddSections([
+            ]))
+            .AddLine(ld => ld.AddSections([
+                "",
+                null
+            ]))
+            .AddLine(ld => ld.AddSections([
+                "Chester"
+            ]))
+            .AddLine(ld => ld.AddSections([
+                    "Cheshire",
+                    "more info"
+                ])
+                .WithSectionSeparator(" - "))
+            .AddLine(ld => ld.AddSections(["CH1 3DD"]))
+        );
+    }
     public static IEnumerable TestCases 
     {
         get 
