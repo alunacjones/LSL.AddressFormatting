@@ -42,7 +42,7 @@ Tests:
         - null        
         - CH1 3DD
     ExpectedResult: "12 High Street; Chester; Cheshire; CH1 3DD"
-  - Description: a set of lines with a custom line separator and defaulta custom section separator
+  - Description: a set of lines with a custom line separator and a custom section separator
     LineSeparator: "; "
     SectionSeparator: " - "
     Lines:
@@ -65,7 +65,7 @@ Tests:
         - null        
         - CH1 3DD
     ExpectedResult: "12 - High Street; Chester; Cheshire; CH1 3DD"
-  - Description: a set of lines with a custom line separator and defaulta custom section separator and a custom section separator for the first line
+  - Description: a set of lines with a custom line separator and a custom section separator and a custom section separator for the first line
     LineSeparator: "; "
     SectionSeparator: " - "
     Lines:

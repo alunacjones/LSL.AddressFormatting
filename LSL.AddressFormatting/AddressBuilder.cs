@@ -5,7 +5,7 @@ using System.Text;
 namespace LSL.AddressFormatting;
 
 /// <inheritdoc/>
-public class AddressBuilder
+public class AddressBuilder : IAddressBuilder
 {
     /// <inheritdoc/>
     public string Build(Action<IBuilderContext> configurator)
