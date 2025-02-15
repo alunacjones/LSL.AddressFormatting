@@ -1,0 +1,79 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "TestCaseContainer",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "Tests": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "items": {
+          "$ref": "#/definitions/AddressBuilderTestCase"
+        }
+      }
+    },
+    "definitions": {
+      "AddressBuilderTestCase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "SectionSeparator": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "LineSeparator": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Lines": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/definitions/LineTestCase"
+            }
+          },
+          "ExpectedResult": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "LineTestCase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Sections": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": ["string", "null"]
+            }
+          },
+          "SectionSeparator": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  }

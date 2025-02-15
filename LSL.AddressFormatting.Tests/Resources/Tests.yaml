@@ -1,0 +1,94 @@
+Tests:
+  - Description: a set of lines with a default line separator and default section separator
+    Lines:
+      - Sections:
+        - "12"
+        - ""
+        - "High Street"
+        - null
+      - Sections:
+        - ""
+      - Sections:
+        - null
+      - Sections:
+        - Chester
+        - null
+      - Sections:
+        - ""
+        - Cheshire
+      - Sections:
+        - null        
+        - CH1 3DD
+    ExpectedResult: "12 High Street, Chester, Cheshire, CH1 3DD"
+  - Description: a set of lines with a custom line separator and default section separator
+    LineSeparator: "; "
+    Lines:
+      - Sections:
+        - "12"
+        - ""
+        - "High Street"
+        - null
+      - Sections:
+        - ""
+      - Sections:
+        - null
+      - Sections:
+        - Chester
+        - null
+      - Sections:
+        - ""
+        - Cheshire
+      - Sections:
+        - null        
+        - CH1 3DD
+    ExpectedResult: "12 High Street; Chester; Cheshire; CH1 3DD"
+  - Description: a set of lines with a custom line separator and defaulta custom section separator
+    LineSeparator: "; "
+    SectionSeparator: " - "
+    Lines:
+      - Sections:
+        - "12"
+        - ""
+        - "High Street"
+        - null
+      - Sections:
+        - ""
+      - Sections:
+        - null
+      - Sections:
+        - Chester
+        - null
+      - Sections:
+        - ""
+        - Cheshire
+      - Sections:
+        - null        
+        - CH1 3DD
+    ExpectedResult: "12 - High Street; Chester; Cheshire; CH1 3DD"
+  - Description: a set of lines with a custom line separator and defaulta custom section separator and a custom section separator for the first line
+    LineSeparator: "; "
+    SectionSeparator: " - "
+    Lines:
+      - SectionSeparator: " X "
+        Sections:
+        - "12"
+        - ""
+        - "High Street"
+        - null     
+      - Sections:
+        - ""
+        - "stuff"
+        - "other"
+      - Sections:
+        - null
+      - Sections:
+        - Chester
+        - null
+      - Sections:
+        - ""
+        - Cheshire
+      - Sections:
+        - null        
+        - CH1 3DD
+    ExpectedResult: "12 X High Street; stuff - other; Chester; Cheshire; CH1 3DD"    
+    
