@@ -10,7 +10,7 @@ namespace LSL.AddressFormatting.Tests;
 public class AddressBuilderTests
 {
     [TestCaseSource(nameof(TestCases))]
-    public void GivenAConfiguration_ItShouldGenerateTheExpectedResult(AddressBuilderTestCase testCase)
+    public void Build_GivenAConfiguration_ItShouldGenerateTheExpectedResult(AddressBuilderTestCase testCase)
     {
         // Arrange
         var builder = new AddressBuilder();
@@ -61,6 +61,7 @@ public class AddressBuilderTests
             .AddLine(ld => ld.AddSections(["CH1 3DD"]))
         );
     }
+
     public static IEnumerable TestCases 
     {
         get 
@@ -82,5 +83,50 @@ public class AddressBuilderTests
         }
     }
 
+    [Test]
+    public void Create_GivenADefinition_ItShouldProduceTheExpectedDelegate()
+    {
+        var builder = new AddressBuilder();
+        var fn = builder.Create<MyType>(c => c
+            .WithSectionSeparator(" ")
+            .WithLineSeparator(", ")
+            .AddLine(ld =>
+            {
+                ld.AddSectionProviders([
+                    i => i.Name,
+                    i => i.Street
+                ]).WithSectionSeparator(" - ");
+            })
+            .AddLine(ld => ld.AddSectionProviders([i => i.City]))
+            .AddLine(ld =>
+            {
+                ld.AddSectionProviders([
+                    i => i.Postcode,
+                ]);
+            }));
 
+        using var scope = new AssertionScope();
+
+        fn(new MyType
+        {
+            Name = "Als",
+            Street = "my street",
+            City = "my city",
+            Postcode = "my postcode"
+        }).Should().Be("Als - my street, my city, my postcode");
+
+        fn(new MyType
+        {
+            Name = "Als",
+            Postcode = "my postcode"
+        }).Should().Be("Als, my postcode");
+    }
+
+    internal class MyType
+    {
+        public string Name { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string Postcode { get; set; }
+    }
 }

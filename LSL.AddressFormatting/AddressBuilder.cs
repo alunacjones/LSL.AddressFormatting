@@ -33,4 +33,33 @@ public class AddressBuilder : IAddressBuilder
                 .Builder
                 .ToString();
     }
+
+    /// <inheritdoc/>
+    public Func<T, string> Create<T>(Action<IBuilderContext<T>> configurator)
+    {
+       var context = new BuilderContext<T>();
+        configurator.Invoke(context);
+        var result = new StringBuilder();
+
+        return instance => context.LineDefinitions
+            .Where(i => context.LineFilter(i, instance))
+            .Aggregate(
+                new { Index = 0, Builder = new StringBuilder() }, 
+                (agg, i) =>
+                {
+                    if (agg.Index > 0) agg.Builder.Append(context.LineSeparator);
+
+                    agg.Builder.Append(string.Join(
+                        i.SectionSeparator, i.SectionProviders.Select(p => p(instance)).Where(context.SectionFilter))
+                    );
+
+                    return new 
+                    { 
+                        Index = agg.Index + 1, 
+                        agg.Builder 
+                    };
+                })
+                .Builder
+                .ToString();
+    }
 }
