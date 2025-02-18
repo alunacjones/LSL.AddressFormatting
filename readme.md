@@ -60,6 +60,18 @@ var singleLineAddress = builder.Build(c => c
 
 ## Example using the `Create<T>` method
 
+The `MyType` class used in the following example is defined as:
+
+```csharp
+public class MyType
+{
+    public string Name { get; set; }
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string Postcode { get; set; }
+}
+```
+
 ```csharp
 // Required usings
 using LSL.AddressFormatting;
@@ -70,22 +82,16 @@ var builder = new AddressBuilder();
 var fn = builder.Create<MyType>(c => c
     .WithSectionSeparator(" ")
     .WithLineSeparator(", ")
-    .AddLine(ld =>
-    {
-        ld.AddSectionProviders([
+    .AddLine(ld => ld
+        .AddSectionProviders([
             i => i.Name,
             i => i.Street
-        ]).WithSectionSeparator(" - ");
-    })
+        ])
+        .WithSectionSeparator(" - ")
+    )
     .AddLine(ld => ld.AddSectionProviders([i => i.City]))
-    .AddLine(ld =>
-    {
-        ld.AddSectionProviders([
-            i => i.Postcode,
-        ]);
-    }));
-
-using var scope = new AssertionScope();
+    .AddLine(ld => ld.AddSectionProviders([i => i.Postcode]))
+);
 
 var address1 = fn(new MyType
 {
@@ -105,16 +111,4 @@ var address2 = fn(new MyType
 
 // address2 will be "Als, my postcode"
 
-```
-
-The `MyType` class is defined as:
-
-```csharp
-public class MyType
-{
-    public string Name { get; set; }
-    public string Street { get; set; }
-    public string City { get; set; }
-    public string Postcode { get; set; }
-}
 ```

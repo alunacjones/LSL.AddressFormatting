@@ -90,20 +90,16 @@ public class AddressBuilderTests
         var fn = builder.Create<MyType>(c => c
             .WithSectionSeparator(" ")
             .WithLineSeparator(", ")
-            .AddLine(ld =>
-            {
-                ld.AddSectionProviders([
+            .AddLine(ld => ld
+                .AddSectionProviders([
                     i => i.Name,
                     i => i.Street
-                ]).WithSectionSeparator(" - ");
-            })
+                ])
+                .WithSectionSeparator(" - ")
+            )
             .AddLine(ld => ld.AddSectionProviders([i => i.City]))
-            .AddLine(ld =>
-            {
-                ld.AddSectionProviders([
-                    i => i.Postcode,
-                ]);
-            }));
+            .AddLine(ld => ld.AddSectionProviders([i => i.Postcode]))
+        );
 
         using var scope = new AssertionScope();
 

@@ -93,7 +93,7 @@ public sealed class LineDefinition<T>
     /// </summary>
     /// <remarks>
     /// If it is set to <c>null</c> then the parent 
-    /// <see cref="IBuilderContext"/>'s <c>SectionSeparator</c> will be used
+    /// <see cref="IBuilderContext{T}"/>'s <c>SectionSeparator</c> will be used
     /// </remarks>
     /// <param name="sectionSeparator"></param>
     /// <returns></returns>
