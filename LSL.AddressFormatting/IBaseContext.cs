@@ -31,4 +31,15 @@ public interface IBaseContext<TFluentReturn>
     /// <param name="sectionTransformer"></param>
     /// <returns></returns>
     TFluentReturn WithSectionValueTransform(Func<string, string> sectionTransformer);
+
+    /// <summary>
+    /// Allows for custom section filtering.
+    /// </summary>
+    /// <remarks>
+    /// The default behaviour is to return <c>true</c> if the 
+    /// section value is not null and not empty.
+    ///</remarks>
+    /// <param name="sectionFilter"></param>
+    /// <returns></returns>
+    TFluentReturn WithSectionFilter(Func<string, bool> sectionFilter);
 }

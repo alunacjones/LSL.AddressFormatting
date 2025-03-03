@@ -15,6 +15,8 @@ public abstract class BaseLineDefinition<TFluentReturn> : ILineDefinition
         _builderContext = builderContext;
     }
     
+    internal ICommonPropertiesAccessor Parent => _builderContext;
+    
     internal string SectionSeparator 
     { 
         get => _sectionSeparator ?? _builderContext.SectionSeparator;
@@ -22,7 +24,6 @@ public abstract class BaseLineDefinition<TFluentReturn> : ILineDefinition
     }
 
     string ILineDefinition.SectionSeparator => SectionSeparator;
-
 
     /// <summary>
     /// Sets the section separator for this line definition

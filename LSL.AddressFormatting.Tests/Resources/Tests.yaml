@@ -114,4 +114,36 @@ Tests:
       - Sections:
         - null        
         - CH1 3DD
-    ExpectedResult: "12 High Street, stuff other, Chester, Cheshire, CH1 3DD"    
+      - Sections:
+        - null
+        - "    " # this will get included as the default test is using sintrg.IsNullOrEmpty
+        - ""
+    ExpectedResult: "12 High Street, stuff other, Chester, Cheshire, CH1 3DD,     "
+  - Description: a set of lines with a whitespace filter
+    UseNoWhitespaceSectionFilter: true
+    Lines:
+      - Sections:
+        - "12"
+        - "   "
+        - "High Street"
+        - null 
+      - Sections:
+        - "   "
+        - "stuff"
+        - "other"
+      - Sections:
+        - null
+      - Sections:
+        - Chester
+        - null
+      - Sections:
+        - "   "
+        - Cheshire
+      - Sections:
+        - null        
+        - CH1 3DD
+      - Sections:
+        - null
+        - "    " # this is excluded with the whitespace filter (hence the line is ignored)
+        - ""
+    ExpectedResult: "12 High Street, stuff other, Chester, Cheshire, CH1 3DD"        

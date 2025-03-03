@@ -13,6 +13,11 @@ public static class BuilderContextTestExtensions
             source.WithSectionValueTransform(s => s?.Trim(testCase.UseTrim.Value));
         }
         
+        if (testCase.UseNoWhitespaceSectionFilter.GetValueOrDefault(false))
+        {
+            source.WithSectionFilter(s => !string.IsNullOrWhiteSpace(s));
+        }
+        
         foreach (var line in testCase.Lines)
         {
             source.AddLine(d => d.AddSections(line.Sections).WithSectionSeparator(line.SectionSeparator));

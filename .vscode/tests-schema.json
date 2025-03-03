@@ -25,6 +25,12 @@
               "string"
             ]
           },
+          "UseNoWhitespaceSectionFilter": {
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
           "UseTrim": {
             "type": [
               "null",

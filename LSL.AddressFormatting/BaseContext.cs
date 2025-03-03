@@ -40,4 +40,13 @@ internal abstract class BaseContext<TFluentReturn> : IBaseContext<TFluentReturn>
         SectionTransformer = sectionTransformer;
         return _self;
     }
+
+    /// <inheritdoc/>
+    public TFluentReturn WithSectionFilter(Func<string, bool> sectionFilter)
+    {
+        Guard.AssertNotNull(nameof(sectionFilter), sectionFilter);
+
+        SectionFilter = sectionFilter;
+        return _self;
+    }
 }

@@ -38,6 +38,8 @@ public class AddressBuilderTests
             // In this case it is not required as " "
             // is the default separator            
             .WithSectionSeparator(" ")
+            // Use a custom section filter that also ignores whitespace entries
+            .WithSectionFilter(s => !string.IsNullOrWhiteSpace(s))
             // An optional transform for each section
             .WithSectionValueTransform(s => s?.Trim())
             .AddLine(ld => ld.AddSections([
@@ -50,7 +52,8 @@ public class AddressBuilderTests
             ]))
             .AddLine(ld => ld.AddSections([
                 "",
-                null
+                null,
+                "    " /* will be ignored as we have used a custom section filter */
             ]))
             .AddLine(ld => ld.AddSections([
                 "Chester"

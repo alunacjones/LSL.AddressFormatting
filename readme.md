@@ -27,6 +27,8 @@ var singleLineAddress = builder.Build(c => c
     .WithSectionSeparator(" ")
     // An optional transform for each section
     .WithSectionValueTransform(s => s?.Trim())    
+    // Use a custom section filter that also ignores whitespace entries
+    .WithSectionFilter(s => !string.IsNullOrWhiteSpace(s))    
     // The following line will have the two middle items removed
     // since they are null or empty strings
     .AddLine(ld => ld.AddSections([
@@ -42,7 +44,8 @@ var singleLineAddress = builder.Build(c => c
     // null or empty strings
     .AddLine(ld => ld.AddSections([
         "",
-        null
+        null,
+        "    " /* will be ignored as we have used a custom section filter */
     ]))
     .AddLine(ld => ld.AddSections([
         "Chester"

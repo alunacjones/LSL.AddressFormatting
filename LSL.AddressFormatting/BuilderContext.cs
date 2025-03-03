@@ -9,7 +9,7 @@ internal sealed class BuilderContext : BaseContext<IBuilderContext>, IBuilderCon
     public BuilderContext() => _self = this;
 
     internal List<LineDefinition> LineDefinitions { get; } = [];
-    internal Func<LineDefinition, bool> LineFilter = new(ld => ld.Sections.Any(v => !string.IsNullOrEmpty(v)));
+    internal Func<LineDefinition, bool> LineFilter = new(ld => ld.Sections.Any(v => ld.Parent.SectionFilter(v)));
 
     /// <inheritdoc/>
     public IBuilderContext AddLine(Action<LineDefinition> definer)
