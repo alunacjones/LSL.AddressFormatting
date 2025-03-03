@@ -9,7 +9,7 @@ internal sealed class GenericBuilderContext<T> : BaseContext<IBuilderContext<T>>
     public GenericBuilderContext() => _self = this;
 
     internal List<LineDefinition<T>> LineDefinitions { get; } = [];
-    internal Func<LineDefinition<T>, T, bool> LineFilter = new((ld, instance) => ld.SectionProviders.Any(v => !string.IsNullOrEmpty(v(instance))));
+    internal Func<LineDefinition<T>, T, bool> LineFilter = new((ld, instance) => ld.SectionProviders.Any(v => ld.Parent.SectionFilter(v(instance))));
 
     public IBuilderContext<T> AddLine(Action<LineDefinition<T>> definer)
     {
