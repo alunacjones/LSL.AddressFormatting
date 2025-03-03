@@ -16,6 +16,7 @@ internal abstract class BaseContext<TFluentReturn> : IBaseContext<TFluentReturn>
     Func<string, bool> ICommonPropertiesAccessor.SectionFilter => SectionFilter;
     string ICommonPropertiesAccessor.LineSeparator => LineSeparator;
     Func<string, string> ICommonPropertiesAccessor.SectionTransformer => SectionTransformer;
+    string ICommonPropertiesAccessor.SectionSeparator => SectionSeparator;
 
     /// <inheritdoc/>
     public TFluentReturn WithSectionSeparator(string sectionSeparator)
