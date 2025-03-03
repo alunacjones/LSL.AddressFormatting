@@ -25,6 +25,12 @@
               "string"
             ]
           },
+          "UseTrim": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
           "SectionSeparator": {
             "type": [
               "null",

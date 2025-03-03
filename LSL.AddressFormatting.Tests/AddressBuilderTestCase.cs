@@ -9,4 +9,5 @@ public class AddressBuilderTestCase
     public string LineSeparator { get; set; }
     public IEnumerable<LineTestCase> Lines { get; set; } = [];
     public string ExpectedResult { get; set; }
+    public char? UseTrim { get; set; }
 }

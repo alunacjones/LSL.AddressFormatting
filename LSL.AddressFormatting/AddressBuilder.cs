@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -14,43 +15,45 @@ public class AddressBuilder : IAddressBuilder
         configurator.Invoke(context);
         var result = new StringBuilder();
 
-        return context.LineDefinitions
-            .Where(context.LineFilter)
-            .Aggregate(
-                new { Index = 0, Builder = new StringBuilder() }, 
-                (agg, i) =>
-                {
-                    if (agg.Index > 0) agg.Builder.Append(context.LineSeparator);
-
-                    agg.Builder.Append(string.Join(i.SectionSeparator, i.Sections.Where(context.SectionFilter)));
-
-                    return new 
-                    { 
-                        Index = agg.Index + 1, 
-                        agg.Builder 
-                    };
-                })
-                .Builder
-                .ToString();
+        return InternalBuild(context, c => c.LineDefinitions.Where(context.LineFilter), l => l.Sections);
     }
 
     /// <inheritdoc/>
     public Func<T, string> Create<T>(Action<IBuilderContext<T>> configurator)
     {
-       var context = new BuilderContext<T>();
+        var context = new GenericBuilderContext<T>();
         configurator.Invoke(context);
         var result = new StringBuilder();
 
-        return instance => context.LineDefinitions
-            .Where(i => context.LineFilter(i, instance))
+        return instance => InternalBuild(
+            context,
+            ctx => ctx.LineDefinitions.Where(i => context.LineFilter(i, instance)),
+            l => l.SectionProviders.Select(x => x(instance))
+        );
+    }
+
+    private string InternalBuild<TContext, TLineDefinition>(
+        TContext context,
+        Func<TContext, IEnumerable<TLineDefinition>> lineDefinitionsProvider,
+        Func<TLineDefinition, IEnumerable<string>> sectionsProvider) 
+        where TContext : ICommonPropertiesAccessor
+        where TLineDefinition : ILineDefinition
+    {
+        var result = new StringBuilder();
+        
+        return lineDefinitionsProvider(context)
             .Aggregate(
                 new { Index = 0, Builder = new StringBuilder() }, 
-                (agg, i) =>
+                (agg, lineDefinition) =>
                 {
                     if (agg.Index > 0) agg.Builder.Append(context.LineSeparator);
 
                     agg.Builder.Append(string.Join(
-                        i.SectionSeparator, i.SectionProviders.Select(p => p(instance)).Where(context.SectionFilter))
+                        lineDefinition.SectionSeparator, 
+                        sectionsProvider(lineDefinition)
+                            .Where(context.SectionFilter)
+                            .Select(i => context.SectionTransformer(i))
+                        )
                     );
 
                     return new 
@@ -60,6 +63,6 @@ public class AddressBuilder : IAddressBuilder
                     };
                 })
                 .Builder
-                .ToString();
+                .ToString();        
     }
 }

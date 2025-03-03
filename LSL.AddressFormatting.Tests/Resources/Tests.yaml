@@ -90,5 +90,28 @@ Tests:
       - Sections:
         - null        
         - CH1 3DD
-    ExpectedResult: "12 X High Street; stuff - other; Chester; Cheshire; CH1 3DD"    
-    
+    ExpectedResult: "12 X High Street; stuff - other; Chester; Cheshire; CH1 3DD" 
+  - Description: a set of lines with a trimming transform
+    UseTrim: "X"
+    Lines:
+      - Sections:
+        - "12"
+        - ""
+        - "XHigh StreetX"
+        - null     
+      - Sections:
+        - ""
+        - "stuff"
+        - "other"
+      - Sections:
+        - null
+      - Sections:
+        - Chester
+        - null
+      - Sections:
+        - ""
+        - Cheshire
+      - Sections:
+        - null        
+        - CH1 3DD
+    ExpectedResult: "12 High Street, stuff other, Chester, Cheshire, CH1 3DD"    

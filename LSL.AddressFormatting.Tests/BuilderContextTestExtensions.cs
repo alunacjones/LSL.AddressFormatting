@@ -8,6 +8,11 @@ public static class BuilderContextTestExtensions
             .WithSectionSeparator(testCase.SectionSeparator)
             .WithLineSeparator(testCase.LineSeparator);
         
+        if (testCase.UseTrim != null)
+        {
+            source.WithSectionValueTransform(s => s?.Trim(testCase.UseTrim.Value));
+        }
+        
         foreach (var line in testCase.Lines)
         {
             source.AddLine(d => d.AddSections(line.Sections).WithSectionSeparator(line.SectionSeparator));

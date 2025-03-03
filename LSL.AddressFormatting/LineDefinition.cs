@@ -6,7 +6,7 @@ namespace LSL.AddressFormatting;
 /// <summary>
 /// Definition of an address line
 /// </summary>
-public sealed class LineDefinition
+public sealed class LineDefinition : ILineDefinition
 {
     private readonly BuilderContext _builderContext;
     private string _sectionSeparator = null;
@@ -17,6 +17,8 @@ public sealed class LineDefinition
         get => _sectionSeparator ?? _builderContext.SectionSeparator;
         private set => _sectionSeparator = value; 
     }
+
+    string ILineDefinition.SectionSeparator => SectionSeparator;
 
     internal LineDefinition(BuilderContext builderContext)
     {
@@ -53,13 +55,18 @@ public sealed class LineDefinition
     }
 }
 
+internal interface ILineDefinition
+{
+    string SectionSeparator { get; }
+}
+
 /// <summary>
 /// A line definition that works against an instance of <typeparamref name="T"/>
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public sealed class LineDefinition<T>
+public sealed class LineDefinition<T> : ILineDefinition
 {
-    private readonly BuilderContext<T> _builderContext;
+    private readonly GenericBuilderContext<T> _builderContext;
     private string _sectionSeparator = null;
     internal List<Func<T, string>> SectionProviders { get; } = [];
 
@@ -69,7 +76,9 @@ public sealed class LineDefinition<T>
         private set => _sectionSeparator = value; 
     }
 
-    internal LineDefinition(BuilderContext<T> builderContext)
+    string ILineDefinition.SectionSeparator => SectionSeparator;
+
+    internal LineDefinition(GenericBuilderContext<T> builderContext)
     {
         _builderContext = builderContext;
     }
