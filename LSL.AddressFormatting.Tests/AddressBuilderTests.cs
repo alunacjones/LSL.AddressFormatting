@@ -92,6 +92,7 @@ public class AddressBuilderTests
         var fn = builder.Create<MyType>(c => c
             .WithSectionSeparator(" ")
             .WithLineSeparator(", ")
+            .WithSectionValueTransform(s => s?.Trim())
             .AddLine(ld => ld
                 .AddSectionProviders([
                     i => i.Name,
@@ -108,8 +109,8 @@ public class AddressBuilderTests
         fn(new MyType
         {
             Name = "Als",
-            Street = "my street",
-            City = "my city",
+            Street = "my street ",
+            City = "my city ",
             Postcode = "my postcode"
         }).Should().Be("Als - my street, my city, my postcode");
 
