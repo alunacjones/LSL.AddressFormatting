@@ -13,7 +13,6 @@ internal abstract class BaseContext<TFluentReturn> : IBaseContext<TFluentReturn>
     internal string LineSeparator { get; private set; } = _defaultLineSeparator;
     internal Func<string, string> SectionTransformer { get; private set; } = s => s;
 
-    string ICommonPropertiesAccessor.SectionSeparator => SectionSeparator;
     Func<string, bool> ICommonPropertiesAccessor.SectionFilter => SectionFilter;
     string ICommonPropertiesAccessor.LineSeparator => LineSeparator;
     Func<string, string> ICommonPropertiesAccessor.SectionTransformer => SectionTransformer;

@@ -38,6 +38,8 @@ public class AddressBuilderTests
             // In this case it is not required as " "
             // is the default separator            
             .WithSectionSeparator(" ")
+            // An optional transform for each section
+            .WithSectionValueTransform(s => s?.Trim())
             .AddLine(ld => ld.AddSections([
                 "123",
                 null,

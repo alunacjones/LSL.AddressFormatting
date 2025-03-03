@@ -25,6 +25,8 @@ var singleLineAddress = builder.Build(c => c
     // In this case it is not required as " "
     // is the default separator            
     .WithSectionSeparator(" ")
+    // An optional transform for each section
+    .WithSectionValueTransform(s => s?.Trim())    
     // The following line will have the two middle items removed
     // since they are null or empty strings
     .AddLine(ld => ld.AddSections([
