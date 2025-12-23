@@ -35,7 +35,7 @@ public abstract class BaseLineDefinition<TFluentReturn> : ILineDefinition
 
     string ILineDefinition.SectionSeparator => SectionSeparator;
     Func<string, string> ILineDefinition.SectionValueTransformer => SectionValueTransformer;
-    
+
     /// <summary>
     /// Sets the section separator for this line definition
     /// </summary>
@@ -51,7 +51,14 @@ public abstract class BaseLineDefinition<TFluentReturn> : ILineDefinition
         return _self;
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Allows for the transforming of each section value.
+    /// </summary>
+    /// <remarks>
+    /// Can be used to trim values for example
+    /// </remarks>
+    /// <param name="sectionTransformer"></param>
+    /// <returns></returns>
     public TFluentReturn WithSectionValueTransform(Func<string, string> sectionTransformer)
     {
         Guard.AssertNotNull(nameof(sectionTransformer), sectionTransformer);
