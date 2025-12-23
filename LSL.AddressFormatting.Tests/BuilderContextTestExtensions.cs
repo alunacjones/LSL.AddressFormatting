@@ -23,7 +23,8 @@ public static class BuilderContextTestExtensions
         foreach (var line in testCase.Lines)
         {
             source.AddLine(d => d.AddSections(line.Sections).WithSectionSeparator(line.SectionSeparator)
-                .ExecuteIf(testCase.UsePerLineSectionTrim, l => l.WithSectionValueTransform(s => s?.Trim())));
+                .ExecuteIf(testCase.UsePerLineSectionTrim, l => l.WithSectionValueTransform(s => s?.Trim()))
+                .ExecuteIf(testCase.UseSectionFilterForCheshire, l => l.WithSectionFilter(s => !string.IsNullOrEmpty(s) && s != "Cheshire")));
         }
     }
 }

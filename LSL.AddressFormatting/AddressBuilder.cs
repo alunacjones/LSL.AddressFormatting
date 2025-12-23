@@ -46,15 +46,19 @@ public class AddressBuilder : IAddressBuilder
                 new { Index = 0, Builder = new StringBuilder() }, 
                 (agg, lineDefinition) =>
                 {
-                    if (agg.Index > 0) agg.Builder.Append(context.LineSeparator);
+                    var filteredSections = sectionsProvider(lineDefinition).Where(lineDefinition.SectionFilter);
 
-                    agg.Builder.Append(string.Join(
-                        lineDefinition.SectionSeparator, 
-                        sectionsProvider(lineDefinition)
-                            .Where(context.SectionFilter)
-                            .Select(i => lineDefinition.SectionValueTransformer(i))
-                        )
-                    );
+                    if (filteredSections.Any())
+                    {
+                        if (agg.Index > 0) agg.Builder.Append(context.LineSeparator);
+                    
+                        agg.Builder.Append(string.Join(
+                            lineDefinition.SectionSeparator, 
+                            filteredSections
+                                .Select(i => lineDefinition.SectionValueTransformer(i))
+                            )
+                        );                        
+                    }
 
                     return new 
                     { 

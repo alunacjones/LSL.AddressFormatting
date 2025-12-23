@@ -28,6 +28,9 @@
           "UsePerLineSectionTrim": {
             "type": "boolean"
           },
+          "UseSectionFilterForCheshire": {
+            "type": "boolean"
+          },
           "UseNoWhitespaceSectionFilter": {
             "type": [
               "null",

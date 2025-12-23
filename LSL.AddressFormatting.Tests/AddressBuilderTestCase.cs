@@ -12,4 +12,5 @@ public class AddressBuilderTestCase
     public char? UseTrim { get; set; }
     public bool? UseNoWhitespaceSectionFilter { get; set; }
     public bool UsePerLineSectionTrim { get; set; }
+    public bool UseSectionFilterForCheshire { get; set; }
 }
