@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class AddressFormattingBuilderExtensions
 {
     /// <summary>
-    /// Adds an <see cref="IAddressFormatter{T}"/>
+    /// Adds an address formatter for instances of <typeparamref name="T"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="source"></param>
