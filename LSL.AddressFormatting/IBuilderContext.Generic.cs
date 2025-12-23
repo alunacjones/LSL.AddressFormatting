@@ -3,7 +3,7 @@ using System;
 namespace LSL.AddressFormatting;
 
 /// <summary>
-/// The builder context used for the <see cref="AddressBuilder.Create{T}(Action{IBuilderContext{T}})"/> method
+/// The builder context used for strongly typed address builders
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public interface IBuilderContext<T> : IBaseContext<IBuilderContext<T>>
