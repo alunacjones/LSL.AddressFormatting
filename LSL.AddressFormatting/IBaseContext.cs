@@ -42,4 +42,12 @@ public interface IBaseContext<TFluentReturn>
     /// <param name="sectionFilter"></param>
     /// <returns></returns>
     TFluentReturn WithSectionFilter(Func<string, bool> sectionFilter);
+
+    /// <summary>
+    /// Returns <see langword="null"/> if the result is an empty string
+    /// and <paramref name="shouldReturnNullIfEmpty"/> is <see langword="true" />
+    /// </summary>
+    /// <param name="shouldReturnNullIfEmpty"></param>
+    /// <returns></returns>
+    TFluentReturn WithNullBeingReturnedIfEmpty(bool shouldReturnNullIfEmpty = true);
 }

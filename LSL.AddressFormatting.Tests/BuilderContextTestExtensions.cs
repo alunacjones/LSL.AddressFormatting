@@ -8,7 +8,8 @@ public static class BuilderContextTestExtensions
     {
         source
             .WithSectionSeparator(testCase.SectionSeparator)
-            .WithLineSeparator(testCase.LineSeparator);
+            .WithLineSeparator(testCase.LineSeparator)
+            .WithNullBeingReturnedIfEmpty(testCase.ReturnNullIfEmpty);
         
         if (testCase.UseTrim != null)
         {

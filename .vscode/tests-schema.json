@@ -31,6 +31,9 @@
           "UseSectionFilterForCheshire": {
             "type": "boolean"
           },
+          "ReturnNullIfEmpty": {
+            "type": "boolean"
+          },
           "UseNoWhitespaceSectionFilter": {
             "type": [
               "null",

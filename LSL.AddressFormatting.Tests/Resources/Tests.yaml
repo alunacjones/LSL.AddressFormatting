@@ -208,3 +208,19 @@ Tests:
       - Sections:
         - null        
     ExpectedResult: ""
+  - Description: an empty set but null should be returned for empty addresses
+    ReturnNullIfEmpty: true
+    Lines:
+      - Sections:
+        - null
+      - Sections:
+        - ""
+      - Sections:
+        - null
+      - Sections:
+        - null
+      - Sections:
+        - ""
+      - Sections:
+        - null        
+    ExpectedResult: null

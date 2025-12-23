@@ -12,11 +12,13 @@ internal abstract class BaseContext<TFluentReturn> : IBaseContext<TFluentReturn>
     internal Func<string, bool> SectionFilter = new(section => !string.IsNullOrEmpty(section));
     internal string LineSeparator { get; private set; } = _defaultLineSeparator;
     internal Func<string, string> SectionTransformer { get; private set; } = s => s;
+    internal bool ReturnNullIfEmpty { get; private set; } = false;
 
     Func<string, bool> ICommonPropertiesAccessor.SectionFilter => SectionFilter;
     string ICommonPropertiesAccessor.LineSeparator => LineSeparator;
     Func<string, string> ICommonPropertiesAccessor.SectionTransformer => SectionTransformer;
     string ICommonPropertiesAccessor.SectionSeparator => SectionSeparator;
+    bool ICommonPropertiesAccessor.ReturnNullIfEmpty => ReturnNullIfEmpty;
 
     /// <inheritdoc/>
     public TFluentReturn WithSectionSeparator(string sectionSeparator)
@@ -47,6 +49,13 @@ internal abstract class BaseContext<TFluentReturn> : IBaseContext<TFluentReturn>
         Guard.AssertNotNull(nameof(sectionFilter), sectionFilter);
 
         SectionFilter = sectionFilter;
+        return _self;
+    }
+
+    /// <inheritdoc/>
+    public TFluentReturn WithNullBeingReturnedIfEmpty(bool shouldReturnNullIfEmpty = true)
+    {
+        ReturnNullIfEmpty = shouldReturnNullIfEmpty;
         return _self;
     }
 }

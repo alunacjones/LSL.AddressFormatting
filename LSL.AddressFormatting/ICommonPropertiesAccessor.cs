@@ -8,4 +8,5 @@ internal interface ICommonPropertiesAccessor
     string LineSeparator { get; }
     Func<string, string> SectionTransformer { get; }
     string SectionSeparator { get; }
+    bool ReturnNullIfEmpty { get; }
 }
