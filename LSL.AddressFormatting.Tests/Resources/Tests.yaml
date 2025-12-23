@@ -191,3 +191,20 @@ Tests:
         - null        
         - CH1 3DD
     ExpectedResult: "12 High Street, Chester, CH1 3DD"
+  - Description: an empty set
+    UseSectionFilterForCheshire: true
+    Lines:
+      - Sections:
+        - null
+      - Sections:
+        - ""
+      - Sections:
+        - null
+      - Sections:
+        - null
+      - Sections:
+        - ""
+        - Cheshire
+      - Sections:
+        - null        
+    ExpectedResult: ""
