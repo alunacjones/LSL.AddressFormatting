@@ -1,3 +1,5 @@
+using System;
+
 namespace LSL.AddressFormatting;
 
 /// <summary>
@@ -23,8 +25,17 @@ public abstract class BaseLineDefinition<TFluentReturn> : ILineDefinition
         set => _sectionSeparator = value; 
     }
 
-    string ILineDefinition.SectionSeparator => SectionSeparator;
+    internal Func<string, string> _sectionValueTransformer;
 
+    internal Func<string, string> SectionValueTransformer
+    {
+        get => _sectionValueTransformer ?? _builderContext.SectionTransformer;
+        set => _sectionValueTransformer = value;
+    }
+
+    string ILineDefinition.SectionSeparator => SectionSeparator;
+    Func<string, string> ILineDefinition.SectionValueTransformer => SectionValueTransformer;
+    
     /// <summary>
     /// Sets the section separator for this line definition
     /// </summary>
@@ -38,5 +49,14 @@ public abstract class BaseLineDefinition<TFluentReturn> : ILineDefinition
     {
         SectionSeparator = sectionSeparator;
         return _self;
-    }    
+    }
+
+    /// <inheritdoc/>
+    public TFluentReturn WithSectionValueTransform(Func<string, string> sectionTransformer)
+    {
+        Guard.AssertNotNull(nameof(sectionTransformer), sectionTransformer);
+        
+        SectionValueTransformer = sectionTransformer;
+        return _self;
+    }
 }

@@ -147,3 +147,25 @@ Tests:
         - "    " # this is excluded with the whitespace filter (hence the line is ignored)
         - ""
     ExpectedResult: "12 High Street, stuff other, Chester, Cheshire, CH1 3DD"        
+  - Description: a set of lines with a default line separator and default section separator but custom section transformer per line
+    UsePerLineSectionTrim: true
+    Lines:
+      - Sections:
+        - "12   "
+        - ""
+        - "  High Street"
+        - null
+      - Sections:
+        - ""
+      - Sections:
+        - null
+      - Sections:
+        - Chester
+        - null
+      - Sections:
+        - ""
+        - Cheshire
+      - Sections:
+        - null        
+        - CH1 3DD
+    ExpectedResult: "12 High Street, Chester, Cheshire, CH1 3DD"

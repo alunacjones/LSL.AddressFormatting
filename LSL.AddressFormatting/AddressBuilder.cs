@@ -24,7 +24,7 @@ public class AddressBuilder : IAddressBuilder
         var context = new GenericBuilderContext<T>();
         configurator.Invoke(context);
         var result = new StringBuilder();
-
+        
         return instance => InternalBuild(
             context,
             ctx => ctx.LineDefinitions.Where(i => context.LineFilter(i, instance)),
@@ -52,7 +52,7 @@ public class AddressBuilder : IAddressBuilder
                         lineDefinition.SectionSeparator, 
                         sectionsProvider(lineDefinition)
                             .Where(context.SectionFilter)
-                            .Select(i => context.SectionTransformer(i))
+                            .Select(i => lineDefinition.SectionValueTransformer(i))
                         )
                     );
 

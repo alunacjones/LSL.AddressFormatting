@@ -1,3 +1,5 @@
+using LSL.ExecuteIf;
+
 namespace LSL.AddressFormatting.Tests;
 
 public static class BuilderContextTestExtensions
@@ -20,7 +22,8 @@ public static class BuilderContextTestExtensions
         
         foreach (var line in testCase.Lines)
         {
-            source.AddLine(d => d.AddSections(line.Sections).WithSectionSeparator(line.SectionSeparator));
+            source.AddLine(d => d.AddSections(line.Sections).WithSectionSeparator(line.SectionSeparator)
+                .ExecuteIf(testCase.UsePerLineSectionTrim, l => l.WithSectionValueTransform(s => s?.Trim())));
         }
     }
 }

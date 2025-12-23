@@ -25,6 +25,9 @@
               "string"
             ]
           },
+          "UsePerLineSectionTrim": {
+            "type": "boolean"
+          },
           "UseNoWhitespaceSectionFilter": {
             "type": [
               "null",

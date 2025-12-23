@@ -10,5 +10,6 @@ public class AddressBuilderTestCase
     public IEnumerable<LineTestCase> Lines { get; set; } = [];
     public string ExpectedResult { get; set; }
     public char? UseTrim { get; set; }
-    public bool? UseNoWhitespaceSectionFilter { get; set;}
+    public bool? UseNoWhitespaceSectionFilter { get; set; }
+    public bool UsePerLineSectionTrim { get; set; }
 }
