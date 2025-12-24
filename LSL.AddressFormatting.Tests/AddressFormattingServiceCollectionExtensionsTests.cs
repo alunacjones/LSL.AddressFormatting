@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace LSL.AddressFormatting.Tests;
 
@@ -10,6 +12,8 @@ public class AddressFormattingServiceCollectionExtensionsTests
     {
         var provider = BuildServiceProvider();
         var formatter = provider.GetRequiredService<IAddressFormatter<MyAddress>>();
+        var nameFormatter = provider.GetRequiredService<IAddressFormatter<NameParts>>();
+
         formatter.ToSingleLine(new()
             {
                 Street = "12 the street",
@@ -18,6 +22,15 @@ public class AddressFormattingServiceCollectionExtensionsTests
             })
             .Should()
             .Be("12 the street, the city, CH12QQ");
+
+        nameFormatter.ToSingleLine(new()
+        {
+            FirstName = "Al",
+            MiddleNames = "",
+            LastName = "Jones"
+        })
+        .Should()
+        .Be("Al Jones");
     }
 
     private static IServiceProvider BuildServiceProvider()
@@ -27,8 +40,18 @@ public class AddressFormattingServiceCollectionExtensionsTests
             .AddFormatter<MyAddress>(c => c.AddLine(c => c
                 .AddSectionProviders([a => a.Street, a => a.City, a => a.Postcode])
                 .WithSectionSeparator(", ")))
+            .AddFormatter<NameParts>(c => c.AddLine(c => c
+                .AddSectionProviders([n => n.FirstName, n => n.MiddleNames, n => n.LastName])                
+            ))
             .Services
             .BuildServiceProvider();
+    }
+
+    internal class NameParts
+    {
+        public string FirstName { get; set; }
+        public string MiddleNames { get; set; }
+        public string LastName { get; set; }
     }
 
     internal class MyAddress
