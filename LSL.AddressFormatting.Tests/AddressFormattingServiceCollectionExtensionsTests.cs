@@ -13,17 +13,30 @@ public class AddressFormattingServiceCollectionExtensionsTests
         var provider = BuildServiceProvider();
         var formatter = provider.GetRequiredService<IAddressFormatter<MyAddress>>();
         var nameFormatter = provider.GetRequiredService<IAddressFormatter<NameParts>>();
+        var builder = provider.GetRequiredService<IAddressBuilder>();
+        var nameFormatter2 = builder.CreateFormatter<NameParts>(c => c.AddLine(c => c
+            .AddSectionProviders([n => n.FirstName, n => n.MiddleNames, n => n.LastName])
+        ));
 
         formatter.ToSingleLine(new()
-            {
-                Street = "12 the street",
-                City = "the city",
-                Postcode = "CH12QQ"
-            })
+        {
+            Street = "12 the street",
+            City = "the city",
+            Postcode = "CH12QQ"
+        })
             .Should()
             .Be("12 the street, the city, CH12QQ");
 
         nameFormatter.ToSingleLine(new()
+        {
+            FirstName = "Al",
+            MiddleNames = "",
+            LastName = "Jones"
+        })
+        .Should()
+        .Be("Al Jones");
+
+        nameFormatter2.ToSingleLine(new()
         {
             FirstName = "Al",
             MiddleNames = "",
@@ -41,7 +54,7 @@ public class AddressFormattingServiceCollectionExtensionsTests
                 .AddSectionProviders([a => a.Street, a => a.City, a => a.Postcode])
                 .WithSectionSeparator(", ")))
             .AddFormatter<NameParts>(c => c.AddLine(c => c
-                .AddSectionProviders([n => n.FirstName, n => n.MiddleNames, n => n.LastName])                
+                .AddSectionProviders([n => n.FirstName, n => n.MiddleNames, n => n.LastName])
             ))
             .Services
             .BuildServiceProvider();
@@ -56,7 +69,7 @@ public class AddressFormattingServiceCollectionExtensionsTests
 
     internal class MyAddress
     {
-        public string Street { get ;set; }
+        public string Street { get; set; }
         public string City { get; set; }
         public string Postcode { get; set; }
     }
