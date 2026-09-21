@@ -97,10 +97,10 @@ public class AddressBuilderTests
             .WithLineSeparator(", ")
             .WithSectionValueTransform(s => s?.Trim())
             .AddLine(ld => ld
-                .AddSectionProviders([
+                .AddSectionProviders(
                     i => i.Name,
                     i => i.Street
-                ])
+                )
                 .WithSectionSeparator(" - ")
             )
             .AddLine(ld => ld.AddSectionProviders([i => i.City]))
