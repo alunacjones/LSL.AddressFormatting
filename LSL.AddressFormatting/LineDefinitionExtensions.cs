@@ -17,7 +17,6 @@ public static class LineDefinitionExtensions
     /// <param name="source"></param>
     /// <param name="sectionProviders"></param>
     /// <returns></returns>
-
     public static LineDefinition<T> AddSectionProviders<T>(this LineDefinition<T> source, params Func<T, string>[] sectionProviders) =>
         source.AddSectionProviders(sectionProviders.AsEnumerable());
 }
